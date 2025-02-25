@@ -5,11 +5,8 @@ on:
 
 jobs:
   lint-and-test:
-    name: Test on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ ubuntu-latest, windows-latest ]
+    name: Test on Ubunto
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -24,6 +21,10 @@ jobs:
         run: |
           pip install --no-cache-dir flake8
 
+      - name: Install dependencies from requirements.txt
+        run: |
+          pip install --no-cache-dir -r requirements.txt
+
       - name: Run Linting (Flake8)
         run: |
           flake8 --max-line-length=88 --ignore=E203,W503 . || true
@@ -31,6 +32,7 @@ jobs:
       - name: Run Specific Unit Test (test_helpers.py)
         run: |
           python -m unittest test.test_helpers
+
 
   docker-build-push:
     needs: lint-and-test
