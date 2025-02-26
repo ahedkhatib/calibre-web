@@ -7,7 +7,7 @@ jobs:
   run-integration-tests:
     runs-on: ubuntu-latest
     env:
-      SPOTIFY_TESTING_REPO_NAME: ahedkhatib/TestAutomationProject
+      CALIBREWEB_TESTING_REPO_NAME: ahedkhatib/TestAutomationProject
       UI_TESTING_WORKFLOW_ID: smoke_testing.yaml
 
     steps:
@@ -17,4 +17,4 @@ jobs:
            -H "Authorization: Bearer ${{ secrets.ACCESS_TOKEN_GITHUB }}" \
            -H "Accept: application/vnd.github.v3+json" \
            -d "{\"ref\": \"master\", \"inputs\": {\"grid_url\": \"http://localhost:4444\", \"chrome_131_0\": true}}" \
-           https://api.github.com/repos/$SPOTIFY_TESTING_REPO_NAME/actions/workflows/$UI_TESTING_WORKFLOW_ID/dispatches
+           https://api.github.com/repos/$CALIBREWEB_TESTING_REPO_NAME/actions/workflows/$UI_TESTING_WORKFLOW_ID/dispatches
