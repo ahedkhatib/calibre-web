@@ -45,13 +45,6 @@ jobs:
         run: |
           python -m unittest test.test_counter_service   
 
-      - name: Publish Test Report
-        uses: dorny/test-reporter@v1
-        if: success() || failure()
-        with:
-          name: Python Unit Test Report
-          path: test-reports/*.xml
-          reporter: java-junit
 
   docker-build-push:
     needs: lint-and-test
