@@ -37,6 +37,9 @@ jobs:
         run: |
           flake8 --max-line-length=88 --ignore=E203,W503 . || true
 
+      - name: Create Test Reports Directory
+        run: mkdir -p test-reports
+
       - name: Run Specific Unit Test (test_helpers.py)
         run: |
           python -m unittest test.test_helpers | tee test-reports/test_helpers.log
