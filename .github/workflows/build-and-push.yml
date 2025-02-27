@@ -33,18 +33,30 @@ jobs:
         run: |
           pip install --no-cache-dir httpx
 
+      # Install pip and pytest
+      - name: Install dependencies
+        run: |
+          pip install pytest
+
       - name: Run Linting (Flake8)
         run: |
           flake8 --max-line-length=88 --ignore=E203,W503 . || true
 
       - name: Run Specific Unit Test (test_helpers.py)
         run: |
-          python -m unittest test.test_helpers
+          pytest test/test_helpers.py --doctest-modules --junitxml=junit/test-results.xml
 
       - name: Run Unit Tests for Counter Service
         run: |
-          python -m unittest test.test_counter_service   
+          pytest test/test_counter_service.py --doctest --junitxml=junit/test-results.xml   
 
+      - name: Upload pytest test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-results
+          path: junit/test-results.xml
+        # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }}
 
   docker-build-push:
     needs: lint-and-test
