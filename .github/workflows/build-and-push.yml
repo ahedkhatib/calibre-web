@@ -39,11 +39,11 @@ jobs:
 
       - name: Run Specific Unit Test (test_helpers.py)
         run: |
-          python -m unittest test.test_helpers | tee test-reports/test_helpers.log
+          python -m unittest test.test_helpers
 
       - name: Run Unit Tests for Counter Service
         run: |
-          python -m unittest test.test_counter_service | tee test-reports/test_counter_service.log    
+          python -m unittest test.test_counter_service   
 
       - name: Publish Test Report
         uses: dorny/test-reporter@v1
