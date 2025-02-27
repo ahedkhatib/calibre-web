@@ -37,9 +37,6 @@ jobs:
         run: |
           flake8 --max-line-length=88 --ignore=E203,W503 . || true
 
-      - name: Create Test Reports Directory
-        run: mkdir -p test-reports
-
       - name: Run Specific Unit Test (test_helpers.py)
         run: |
           python -m unittest test.test_helpers | tee test-reports/test_helpers.log
@@ -48,11 +45,13 @@ jobs:
         run: |
           python -m unittest test.test_counter_service | tee test-reports/test_counter_service.log    
 
-      - name: Upload Test Logs as Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Publish Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
         with:
-          name: test-results
-          path: test-reports/*.log
+          name: Python Unit Test Report
+          path: test-reports/*.xml
+          reporter: java-junit
 
   docker-build-push:
     needs: lint-and-test
