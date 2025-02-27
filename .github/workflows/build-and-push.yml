@@ -39,12 +39,17 @@ jobs:
 
       - name: Run Specific Unit Test (test_helpers.py)
         run: |
-          python -m unittest test.test_helpers
+          python -m unittest test.test_helpers | tee test-reports/test_helpers.log
 
       - name: Run Unit Tests for Counter Service
         run: |
-          python -m unittest test.test_counter_service    
+          python -m unittest test.test_counter_service | tee test-reports/test_counter_service.log    
 
+      - name: Upload Test Logs as Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: test-reports/*.log
 
   docker-build-push:
     needs: lint-and-test
