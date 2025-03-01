@@ -9,7 +9,7 @@ jobs:
     env:
       CALIBREWEB_TESTING_REPO_NAME: ahedkhatib/TestAutomationProject
       UI_TESTING_WORKFLOW_ID: smoke_testing.yaml
-      API_TESTING_WORKFLOW_ID: api_testing.yml
+      API_TESTING_WORKFLOW_ID: api_testing.yaml
 
     steps:
       - name: Trigger the Selenium testing workflow
