@@ -9,7 +9,7 @@ TEST_MODE = os.getenv("TEST_MODE", "false").lower() == "true"
 
 DB_PATH = "metadataTest.db" if TEST_MODE else os.path.join(os.getcwd(), "library", "metadata.db")
 
-
+print(f"Using database: {DB_PATH}")
 def custom_title_sort(s):
     """ Dummy function to replace Calibre's missing SQLite title_sort """
     return s.lower() if s else ""
