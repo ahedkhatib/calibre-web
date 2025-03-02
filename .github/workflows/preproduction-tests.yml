@@ -1,4 +1,4 @@
-name: Test JMeter Action
+name: Load Test with Locust
 
 on:
   pull_request:
@@ -8,22 +8,23 @@ on:
       - main
 
 jobs:
-  action_build:
+  load_test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Ensure reports folder exists
-        run: mkdir -p reports     # Ensures folder exists before running JMeter
-
-      - name: Run JMeter Action on a test
-        uses: rbhadti94/apache-jmeter-action@v0.5.0
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          testFilePath: test/calibre-standard-users.jmx
-          outputReportsFolder: reports/
-          args: "--loglevel INFO"
+          python-version: "3.10"
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: jmeter-test-results
-          path: reports/
+      - name: Install Locust
+        run: |
+          python -m pip install --upgrade pip
+          pip install locust
+
+      - name: Run Locust Test
+        run: |
+          locust -f locustfile.py --headless --users 3 --spawn-rate 2 --run-time 1m

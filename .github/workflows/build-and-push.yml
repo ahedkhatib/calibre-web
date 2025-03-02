@@ -44,19 +44,18 @@ jobs:
 
       - name: Run Specific Unit Test (test_helpers.py)
         run: |
-          pytest test/test_helpers.py --doctest-modules --junitxml=junit/test-results.xml
+          pytest test/test_helpers.py --doctest-modules --junitxml=test-results/test_helpers.xml
 
       - name: Run Unit Tests for Counter Service
         run: |
-          pytest test/test_counter_service.py --doctest-modules --junitxml=junit/test-results.xml   
+          pytest test/test_counter_service.py --doctest-modules --junitxml=test-results/test_counter_service.xml
 
-      - name: Upload pytest test results
-        uses: actions/upload-artifact@v4
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
         with:
-          name: pytest-results
-          path: junit/test-results.xml
-        # Use always() to always run this step to publish test results when there are test failures
-        if: ${{ always() }}
+          files: |
+           test-results/**/*.xml
 
   docker-build-push:
     needs: lint-and-test
