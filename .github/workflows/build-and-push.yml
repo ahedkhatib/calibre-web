@@ -79,6 +79,7 @@ jobs:
         run: |
           docker push ahedkhatib/calibre-web:${{ github.run_number }}
 
+
       # Build and push counter-service microservice
       - name: Build Docker image for counter-service
         run: |
