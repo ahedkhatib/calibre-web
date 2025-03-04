@@ -9,7 +9,6 @@ TEST_MODE = os.getenv("TEST_MODE", "false").lower() == "true"
 
 DB_PATH = "metadataTest.db" if TEST_MODE else os.path.join(os.getcwd(), "library", "metadata.db")
 
-print(f"Using database: {DB_PATH}")
 def custom_title_sort(s):
     """ Dummy function to replace Calibre's missing SQLite title_sort """
     return s.lower() if s else ""
@@ -19,7 +18,7 @@ def get_db_connection():
     #conn = sqlite3.connect(DB_PATH)
     #conn.create_function("title_sort", 1, custom_title_sort)  # Register custom function
     #return conn
-    print(DB_PATH)
+    #print(DB_PATH)
     conn = sqlite3.connect(DB_PATH)
     conn.create_function("title_sort", 1, custom_title_sort)  # Register custom function
 
