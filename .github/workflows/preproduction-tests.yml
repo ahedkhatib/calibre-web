@@ -29,6 +29,7 @@ jobs:
         run: |
           locust -f locustfile.py --headless --users 3 --spawn-rate 2 --run-time 3s --html=report_small.html --csv=report_small
 
+
       - name: Upload Small Test Report
         uses: actions/upload-artifact@v4
         with:
