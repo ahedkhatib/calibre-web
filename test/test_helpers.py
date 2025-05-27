@@ -12,7 +12,6 @@ class TestHelperFunctions(unittest.TestCase):
         self.assertEqual(strip_whitespaces("   hello   "), "hello")
         self.assertEqual(strip_whitespaces("\u200Bhello\u200B"), "hello")
 
-
     def test_get_mimetype(self):
         self.assertEqual(get_mimetype(".fb2"), "text/xml")
         self.assertEqual(get_mimetype(".cbz"), "application/zip")
